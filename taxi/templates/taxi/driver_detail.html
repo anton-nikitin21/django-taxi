@@ -1,0 +1,51 @@
+{% extends 'taxi/base.html' %}
+
+{% block title %}Водитель{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Информация о водителе</h2>
+    <div class="card">
+        <h3>{{ driver.last_name }} {{ driver.first_name }} {{ driver.patronymic }}</h3>
+        <p><strong>Дата рождения:</strong> {{ driver.birth_date }}</p>
+        <p><strong>ИНН:</strong> {{ driver.inn }}</p>
+        <p><strong>Паспорт:</strong> {{ driver.passport_series }} {{ driver.passport_number }}</p>
+        <p><strong>Автомобиль:</strong> {{ driver.car.brand }} ({{ driver.car.license_plate }})</p>
+        <a href="{% url 'car_detail' driver.car.id %}" class="btn">Посмотреть автомобиль</a>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Заказы водителя</h2>
+    {% if orders %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Время</th>
+                        <th>Адрес подачи</th>
+                        <th>Адрес следования</th>
+                        <th>Пассажиры</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.order_date }}</td>
+                            <td>{{ order.order_time }}</td>
+                            <td>{{ order.pickup_address }}</td>
+                            <td>{{ order.destination_address }}</td>
+                            <td>{{ order.passengers_count }}</td>
+                            <td><a href="{% url 'order_detail' order.id %}" class="btn">Подробнее</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">У этого водителя пока нет заказов.</p>
+    {% endif %}
+</div>
+{% endblock %}

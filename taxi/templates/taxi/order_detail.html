@@ -1,0 +1,21 @@
+{% extends 'taxi/base.html' %}
+
+{% block title %}Заказ{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Информация о заказе</h2>
+    <div class="card">
+        <h3>Заказ от {{ order.order_date }} {{ order.order_time }}</h3>
+        <p><strong>Адрес подачи:</strong> {{ order.pickup_address }}</p>
+        <p><strong>Адрес следования:</strong> {{ order.destination_address }}</p>
+        <p><strong>Количество пассажиров:</strong> {{ order.passengers_count }}</p>
+        <p><strong>Длина маршрута:</strong> {{ order.route_length }} км</p>
+        <p><strong>Водитель:</strong> {{ order.driver.last_name }} {{ order.driver.first_name }} {{ order.driver.patronymic }}</p>
+        <p><strong>Автомобиль:</strong> {{ order.driver.car.brand }} ({{ order.driver.car.license_plate }})</p>
+
+        <a href="{% url 'driver_detail' order.driver.id %}" class="btn">Посмотреть водителя</a>
+        <a href="{% url 'car_detail' order.driver.car.id %}" class="btn">Посмотреть автомобиль</a>
+    </div>
+</div>
+{% endblock %}

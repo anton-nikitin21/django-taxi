@@ -1,0 +1,43 @@
+{% extends 'taxi/base.html' %}
+
+{% block title %}Автомобиль{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Информация об автомобиле</h2>
+    <div class="card">
+        {% if car.image %}
+            <img src="{{ car.image.url }}" alt="{{ car.brand }}" style="width: 100%; max-width: 500px; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;">
+        {% endif %}
+        <h3>{{ car.brand }}</h3>
+        <p>
+            <strong>Класс:</strong>
+            {% if car.car_class == 'business' %}
+                <span class="badge badge-business">Бизнес</span>
+            {% else %}
+                <span class="badge badge-economy">Эконом</span>
+            {% endif %}
+        </p>
+        <p><strong>Госномер:</strong> {{ car.license_plate }}</p>
+        <p><strong>Цвет:</strong> {{ car.color }}</p>
+        <p><strong>Год выпуска:</strong> {{ car.year }}</p>
+    </div>
+</div>
+
+<div class="section">
+    <h2>Водители этого автомобиля</h2>
+    {% if drivers %}
+        <div class="cards">
+            {% for driver in drivers %}
+                <div class="card">
+                    <h3>{{ driver.last_name }} {{ driver.first_name }}</h3>
+                    <p><strong>ИНН:</strong> {{ driver.inn }}</p>
+                    <a href="{% url 'driver_detail' driver.id %}" class="btn">Подробнее</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty">Для этого автомобиля водители не найдены.</p>
+    {% endif %}
+</div>
+{% endblock %}

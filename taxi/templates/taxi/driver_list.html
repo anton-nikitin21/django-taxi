@@ -1,0 +1,24 @@
+{% extends 'taxi/base.html' %}
+
+{% block title %}Водители{% endblock %}
+
+{% block content %}
+<div class="section">
+    <h2>Список водителей</h2>
+    {% if drivers %}
+        <div class="cards">
+            {% for driver in drivers %}
+                <div class="card">
+                    <h3>{{ driver.last_name }} {{ driver.first_name }} {{ driver.patronymic }}</h3>
+                    <p><strong>Дата рождения:</strong> {{ driver.birth_date }}</p>
+                    <p><strong>ИНН:</strong> {{ driver.inn }}</p>
+                    <p><strong>Автомобиль:</strong> {{ driver.car.brand }} ({{ driver.car.license_plate }})</p>
+                    <a href="{% url 'driver_detail' driver.id %}" class="btn">Подробнее</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty">Водители пока не добавлены.</p>
+    {% endif %}
+</div>
+{% endblock %}
